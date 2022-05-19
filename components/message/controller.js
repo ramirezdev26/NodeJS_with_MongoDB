@@ -13,11 +13,14 @@ class MessageService{
         return addMessageUser    
     }
     
-    
-
     async getMessages() {
         const messages = await this.mongoDB.getAll(this.collection);
         return messages || [];
+    }
+
+    async updateMessage({ messageId, message } = {}) {
+        const updatemessageId = await this.mongoDB.update( this.collection, messageId, message );
+        return updatemessageId;
     }
 }
 

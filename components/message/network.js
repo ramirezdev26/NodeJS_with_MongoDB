@@ -37,5 +37,21 @@ function messagesApi(app) {
             next(err);
         }
     });
+
+    router.put('/:messageId', async function (req, res, next) {
+        const { messageId } = req.params;
+        const { body: message } = req;
+
+        try {
+            const updateMessageId = await messageService.updateMessage({ messageId, message });
+
+            res.status(200).json({
+                data: updateMessageId,
+                message : 'message was updated'
+            });
+        } catch (err) {
+            next(err);
+        }
+    });
 }
 module.exports = messagesApi;
