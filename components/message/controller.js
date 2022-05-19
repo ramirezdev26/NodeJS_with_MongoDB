@@ -19,8 +19,13 @@ class MessageService{
     }
 
     async updateMessage({ messageId, message } = {}) {
-        const updatemessageId = await this.mongoDB.update( this.collection, messageId, message );
-        return updatemessageId;
+        const updateMessageId = await this.mongoDB.update( this.collection, messageId, message );
+        return updateMessageId;
+    }
+
+    async deleteMessage({ messageId } = {}) {
+        const deletedMessage = await this.mongoDB.delete( this.collection, messageId );
+        return deletedMessage;
     }
 }
 

@@ -53,5 +53,20 @@ function messagesApi(app) {
             next(err);
         }
     });
+
+    router.delete('/:messageId', async function (req, res, next) {
+        const { messageId } = req.params;
+
+        try {
+            const deleteMessageId = await messageService.deleteMessage({messageId});
+
+            res.status(200).json({
+                data: deleteMessageId,
+                message: 'message deleted'
+            });
+        } catch(err) {
+            next(err);
+        }
+    });
 }
 module.exports = messagesApi;
