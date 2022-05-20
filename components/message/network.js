@@ -1,8 +1,11 @@
 const express = require('express');
-// const { MongoDriverError } = require('mongodb');
-// const response = require('../../network/response');
 const MessageService = require('./controller')
-
+const validationHandler = require('../../utils/middleware/validationHandler');
+const {
+    messageIdSchema,
+    createMessageSchema,
+    updateMessageSchema
+} = require('../../utils/schemas/message');
 
 function messagesApi(app) {
     const router = express.Router();
@@ -14,7 +17,6 @@ function messagesApi(app) {
         req.query;
         try {
             const message = await messageService.getMessages();
-            throw new Error('Error getting message');
 
             res.status(200).json({
                 data: message,
@@ -25,7 +27,7 @@ function messagesApi(app) {
         }
     });
 
-    router.post('/', async function (req, res, next) {
+    router.post('/', validationHandler(createMessageSchema), async function (req, res, next) {
         const request = req.body;
         try {
             const addMessage = await messageService.addMessage(request);
@@ -39,7 +41,7 @@ function messagesApi(app) {
         }
     });
 
-    router.put('/:messageId', async function (req, res, next) {
+    router.put('/:messageId', validationHandler({ messageId: messageIdSchema }, 'params') , validationHandler(updateMessageSchema), async function (req, res, next) {
         const { messageId } = req.params;
         const { body: message } = req;
 
@@ -55,7 +57,7 @@ function messagesApi(app) {
         }
     });
 
-    router.delete('/:messageId', async function (req, res, next) {
+    router.delete('/:messageId', validationHandler({ messageId: messageIdSchema }, 'params'), async function (req, res, next) {
         const { messageId } = req.params;
 
         try {
