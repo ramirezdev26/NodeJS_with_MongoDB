@@ -22,10 +22,13 @@
   },
   "homepage": "https://github.com/ramirezdev26/NodeJS_with_MongoDB#readme",
   "dependencies": {
+    "@hapi/boom": "^10.0.0",
+    "@hapi/joi": "^17.1.1",
     "body-parser": "^1.20.0",
     "chalk": "^5.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "joi": "^17.6.0",
     "mongodb": "^4.6.0"
   }
 }

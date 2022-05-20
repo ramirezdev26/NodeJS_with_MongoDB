@@ -14,6 +14,7 @@ function messagesApi(app) {
         req.query;
         try {
             const message = await messageService.getMessages();
+            throw new Error('Error getting message');
 
             res.status(200).json({
                 data: message,
